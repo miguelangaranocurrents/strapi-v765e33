@@ -797,8 +797,12 @@ const RelationModalWithContext = ({
           }
           hasMoreItems={hasNextPage}
           loading={isLoadingSearchRelations || isLoadingPermissions}
-          onOpenChange={() => {
-            handleSearch(textValue ?? '');
+          onOpenChange={(isOpen: boolean) => {
+            if (isOpen) {
+              // Start from an unfiltered list; a stale label from a previous selection must not be used as a search.
+              setTextValue('');
+              handleSearch('');
+            }
           }}
           noOptionsMessage={() =>
             formatMessage({
